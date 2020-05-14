@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/transaksi")
@@ -88,11 +90,16 @@ public class TransaksiController {
                 .body(new ByteArrayResource(dbFile.getData()));
     }
 
-    @PostMapping("/lansgung")
+    @PostMapping("/history")
     public ResponseEntity<?> postTransaksi(@RequestBody Transaksi transaksi){
-        transaksiRepository.save(transaksi);
+        List<Transaksi> history = transaksiRepository.findByUsername(transaksi.getUsername());
+        if(history.size() == 0){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("message","email " + transaksi.getUsername() + " tidak ditemukan");
+            return new ResponseEntity<>(jsonObject,HttpStatus.BAD_REQUEST);
+        }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("message","transaksi berhasil");
+        jsonObject.put("transaksi",history);
         return new ResponseEntity<>(jsonObject,HttpStatus.OK);
     }
 
