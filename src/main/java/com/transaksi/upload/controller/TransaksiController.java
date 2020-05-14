@@ -24,7 +24,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/transaksi")
+@RequestMapping("/api/transaksi")
 public class TransaksiController {
     private static final Logger logger = LoggerFactory.getLogger(TransaksiController.class);
 
