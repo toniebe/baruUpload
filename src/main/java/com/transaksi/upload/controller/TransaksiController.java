@@ -51,7 +51,7 @@ public class TransaksiController {
         DBFile dbFile = dbFileStorageService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("transaksi/downloadFile/")
+                .path("/api/transaksi/downloadFile/")
                 .path(dbFile.getId())
                 .toUriString();
 
